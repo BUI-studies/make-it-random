@@ -1,0 +1,7 @@
+.sidebar {
+    @apply flex flex-col  h-screen bg-orange-300;
+}
+
+.button {
+    @apply bg-gray-900 text-white text-center px-3 py-3 text-sm font-medium hover:text-orange-400 hover:transition-all w-full;
+}
