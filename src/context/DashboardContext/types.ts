@@ -15,4 +15,7 @@ export type Dashboard = {
 export type DashboardContextType = {
   dashboards: Dashboard[]
   dispatch: Dispatch
+  addFormVisible: boolean
+  dashboardsId: string
+  randomaizerVisible: boolean
 }

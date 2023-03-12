@@ -17,6 +17,7 @@ const Icons = {
 			/>
 		</svg>
 	),
+	
 }
 
 export default Icons
