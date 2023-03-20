@@ -1,5 +1,13 @@
 import { Action } from '@/context/types'
-import { ADD_DASHBOARD, UPDATE_DASHBOARD, REMOVE_DASHBOARD, DashboardContextType, Dashboard } from '../index'
+import {
+  ADD_DASHBOARD,
+  UPDATE_DASHBOARD,
+  REMOVE_DASHBOARD,
+  VISIBLE_ADDDASHBOARD,
+  SET_DASHBOARDID,
+  DashboardContextType,
+  Dashboard,
+} from '../index'
 import { LocalStorage } from '@/helpers'
 
 const DashboardReducer = (state: DashboardContextType, action: Action): DashboardContextType => {
@@ -19,6 +27,13 @@ const DashboardReducer = (state: DashboardContextType, action: Action): Dashboar
       break
     case REMOVE_DASHBOARD:
       newState.dashboards = state.dashboards.filter((dashboard: Dashboard) => dashboard.id !== action.payload)
+      break
+    case VISIBLE_ADDDASHBOARD:
+      newState.addFormVisible = action.payload
+      break
+    case SET_DASHBOARDID:
+      newState.dashboardsId = action.payload
+      newState.randomaizerVisible = true
       break
     default:
       throw new Error(`Unhandled action type: ${action.type}`)

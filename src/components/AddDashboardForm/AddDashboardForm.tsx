@@ -5,18 +5,15 @@ import { v4 as uuidv4 } from 'uuid'
 import Icons from '../../assets/Icons'
 
 import classes from './addDashboardForm.module.scss'
-import { addDashboard, Dashboard, useDashboards } from '@/context/DashboardContext'
+import { addDashboard, addDashboardVisible, Dashboard, useDashboards } from '@/context/DashboardContext'
 
-interface addGroupFormProps {
-  setAddDashboard: (groups: any) => void
-}
-
-const AddDashboardForm: FC<addGroupFormProps> = ({ setAddDashboard }) => {
+const AddDashboardForm: FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm()
+  
   const { dispatch, dashboards } = useDashboards()
   const [inValid, setInValid] = useState<boolean>(false)
 
@@ -24,11 +21,14 @@ const AddDashboardForm: FC<addGroupFormProps> = ({ setAddDashboard }) => {
     const newDashboard: Dashboard = { id: uuidv4(), title: dashboardName, list: [] }
 
     addDashboard(newDashboard, dispatch)
+    addDashboardVisible(false, dispatch)
   }
+
   const onChange = ({ target }: SyntheticEvent) => {
     setInValid(dashboards.some(({ title }) => title === (target as HTMLInputElement).value))
   }
-  const closeField = () => setAddDashboard(false)
+  
+  const closeField = () => addDashboardVisible(false, dispatch)
 
   const IconPlus = Icons.plus
 

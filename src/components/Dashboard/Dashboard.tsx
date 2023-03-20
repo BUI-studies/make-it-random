@@ -1,22 +1,25 @@
 import React, { FC } from 'react'
+import classes from './Dashboard.module.scss'
+import { useDashboards } from '@/context/DashboardContext'
+
 import AddDashboardForm from '../AddDashboardForm/AddDashboardForm'
+import DashboardItem from './DashboardItem/DashboardItem'
 
-interface DashboardProps {
-  addDashboard: boolean
-  setAddDashboard: (groups: any) => void
-}
+const Dashboard: FC = () => {
+  const { addFormVisible, dashboardsId, dashboards } = useDashboards()
 
-const Dashboard: FC<DashboardProps> = ({ addDashboard, setAddDashboard }) => {
+  const dashboardName = dashboards.find((item) => item.id === dashboardsId)?.title
+  
   return (
-    <div className="px-6">
-      {addDashboard ? (
-        <AddDashboardForm setAddDashboard={setAddDashboard} />
+    <div>
+      {addFormVisible ? (
+        <AddDashboardForm />
       ) : (
         <div className="text-white text-2xl font-bold py-5">
-          <h2>Groups name</h2>
+          <h2>{!dashboardName ? 'Group name' : dashboardName}</h2>
         </div>
       )}
-      <div>dashboard</div>
+      <DashboardItem />
     </div>
   )
 }
