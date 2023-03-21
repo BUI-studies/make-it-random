@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import Icons from '@/assets/Icons'
 
 import classes from './addRandomaizer.module.scss'
-import { updateDashboard, Randomizer, useDashboards } from '@/context/DashboardContext'
+import { updateDashboard, Randomizer, useDashboards, Dashboard } from '@/context/DashboardContext'
 
 const AddRandomaizer: FC = () => {
   const {
@@ -21,7 +21,8 @@ const AddRandomaizer: FC = () => {
 
   const onSubmit = ({ randomaizerName, randomaizerLists }: FieldValues) => {
     const newRandomaizer: Randomizer = { id: uuidv4(), title: randomaizerName, items: randomaizerLists.split('\n') }
-    const dashboardsItem = dashboards.find((item) => item.id === dashboardsId)
+    // @ts-ignore
+    const dashboardsItem: Dashboard = dashboards?.find((item) => item.id === dashboardsId)
     dashboardsItem?.list.push(newRandomaizer)
     updateDashboard(dashboardsItem, dispatch)
     reset()

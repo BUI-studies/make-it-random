@@ -1,7 +1,7 @@
-import { FC, Fragment, useRef, useState } from 'react'
+import { FC, Fragment, useRef, useState, SyntheticEvent } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { FieldValues, useForm } from 'react-hook-form'
-import { Randomizer, useDashboards, updateDashboard } from '@/context/DashboardContext'
+import { Randomizer, useDashboards, updateDashboard, Dashboard } from '@/context/DashboardContext'
 
 import classes from './Modal.module.scss'
 import Icons from '@/assets/Icons'
@@ -33,15 +33,14 @@ const Modal: FC<ModalProps> = ({ open, setOpen, item }) => {
         items.push(element)
       }
     }
-
     const newRandomaizer: Randomizer = { id, title: randomaizerName, items }
-    const dashboardsItem = dashboards.find((item) => item.id === dashboardsId)
+    // @ts-ignore
+    const dashboardsItem: Dashboard = dashboards?.find((item) => item.id === dashboardsId)
     dashboardsItem.list = [newRandomaizer]
-    console.log("🚀 ==== > dashboardsItem:", dashboardsItem);
     updateDashboard(dashboardsItem, dispatch)
     setOpen(false)
-    // reset()
   }
+  
   const onChange = ({ target }: SyntheticEvent) => {
     setInValid(dashboards?.some(({ title }) => title === (target as HTMLInputElement).value))
   }

@@ -20,8 +20,7 @@ const RandomaizerItem: FC<Randomizer> = ({ title, items, id }) => {
   const IconDelete = Icons.delete
   const IconEdit = Icons.edit
 
-
-  const random = (itemsList: [string]) => {
+  const random = (itemsList: string[]) => {
     if (itemsList.length > 0) {
       const selected: string = itemsList.splice(Math.floor(Math.round(Math.random() * itemsList.length - 1)), 1)[0]
 
@@ -31,7 +30,6 @@ const RandomaizerItem: FC<Randomizer> = ({ title, items, id }) => {
 
       setListItems(itemsList.filter((item: string) => item !== selected))
     } else {
-        
       setListItems(wasSelectedArray.filter(Boolean))
       setWasSelectedArray([])
       setWasSelected('Randomiser is reloading...Press button one more time.')
@@ -40,8 +38,10 @@ const RandomaizerItem: FC<Randomizer> = ({ title, items, id }) => {
 
   const deleteItem = () => {
     const dashboardsItem = dashboards?.find((item) => item.id === dashboardsId)
-    dashboardsItem.list = dashboardsItem?.list.filter((item) => item.id !== id)
-    updateDashboard(dashboardsItem, dispatch)
+    if (!!dashboardsItem) {
+      dashboardsItem.list = dashboardsItem?.list.filter((item) => item.id !== id)
+      updateDashboard(dashboardsItem, dispatch)
+    }
   }
 
   return (
