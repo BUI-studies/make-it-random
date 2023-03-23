@@ -1,18 +1,67 @@
 .addGroups {
   @apply px-3 py-5 col-span-4;
-  background: #02043b87;
-  border-radius: 12px;
+  text-align: center;
+  height: 500px;
+  overflow-y: auto;
 }
 
 .field {
-  @apply block rounded-md border-gray-300 px-3 py-1 focus:border-none focus:no-underline focus:outline-none focus:ring-2 focus:ring-indigo-500 w-1/2 text-lg w-full mb-5;
+  @apply block rounded-md px-3 py-1 focus:border-none focus:no-underline focus:outline-none focus:ring-2 focus:ring-green-500  text-lg w-full ;
+  border: 2px solid #2626e5;
   resize: none;
+}
+.fieldTitle {
+  @apply  block rounded-md px-3 py-1 focus:border-none focus:no-underline focus:outline-none focus:ring-2 focus:ring-green-500  text-lg w-full ;
+  border: 2px solid #2626e5;
+  resize: none;
+
 }
 
 .addButton {
-  @apply flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-2 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
+  @apply rounded-md border border-transparent bg-blue-600 px-2 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  margin: 0 auto;
+  width: fit-content;
+  &:disabled {
+    opacity: 0.4;
+  }
+}
+.saveButton {
+  @apply rounded-md border border-transparent bg-green-600 px-2 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2;
+  min-width: 80px;
 
   &:disabled {
     opacity: 0.4;
   }
+}
+
+.closeButton {
+  @apply rounded-md border border-transparent bg-red-600 px-2 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2;
+  min-width: 80px;
+}
+
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba($color: #000000, $alpha: 0.5);
+  transition: opacity .3s ease-in-out;
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.modal.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modalWrapper {
+  border-radius: 10px;
+  padding: 1em;
+  background-color: #fff;
+  width: 500px;
+ 
 }

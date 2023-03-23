@@ -4,6 +4,7 @@ export type Randomizer = {
   id: string
   title: string
   items: string[]
+  wasSelectedStorage?: string[]
 }
 
 export type Dashboard = {
