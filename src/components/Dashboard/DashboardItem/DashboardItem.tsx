@@ -5,16 +5,15 @@ import AddRandomaizer from '@/components/AddRandomaizer/AddRandomaizer'
 import Randomaizer from '@/components/Randomaizer/Randomaizer'
 
 const DashboardItem = () => {
-  const { dashboards, dashboardsId, randomaizerVisible } = useDashboards()
+  const { randomaizerVisible } = useDashboards()
 
   return (
     <>
       {randomaizerVisible && (
         <div className={classes.dashboard}>
           <AddRandomaizer />
-          {/* <div className="col-span-4"> */}
-            <Randomaizer />
-          {/* </div> */}
+
+          <Randomaizer />
         </div>
       )}
     </>

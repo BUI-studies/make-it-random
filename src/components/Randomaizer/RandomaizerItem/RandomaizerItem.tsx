@@ -5,22 +5,31 @@ import Modal from '@/components/Modal/Modal'
 
 import classes from './RandomaizerItem.module.scss'
 
-const RandomaizerItem: FC<Randomizer> = ({ title, items, id }) => {
+const RandomaizerItem: FC<Randomizer> = ({ title, items, id, wasSelectedStorage }) => {
   const { dashboardsId, dashboards, dispatch } = useDashboards()
 
   const [wasSelected, setWasSelected] = useState<string>('item will appear here')
-  const [wasSelectedArray, setWasSelectedArray] = useState<string[]>([''])
+  const [wasSelectedArray, setWasSelectedArray] = useState<string[]>([])
   const [listItems, setListItems] = useState<string[]>(items)
-  const [open, setOpen] = useState<boolean>(false)
+  const [openModal, setOpenModal] = useState<boolean>(false)
 
   useEffect(() => {
     setListItems(items)
   }, [dashboards])
 
+  useEffect(() => {
+    if(wasSelectedStorage) setWasSelectedArray(wasSelectedStorage)
+  }, [])
+
   const IconDelete = Icons.delete
   const IconEdit = Icons.edit
 
   const random = (itemsList: string[]) => {
+    // @ts-ignore
+    const dashboardsItem: Dashboard = dashboards.map((item) => {
+      return item.list?.find((item) => item.id === id)
+    })[0]
+
     if (itemsList.length > 0) {
       const selected: string = itemsList.splice(Math.floor(Math.round(Math.random() * itemsList.length - 1)), 1)[0]
 
@@ -29,10 +38,18 @@ const RandomaizerItem: FC<Randomizer> = ({ title, items, id }) => {
       setWasSelectedArray([...wasSelectedArray, selected])
 
       setListItems(itemsList.filter((item: string) => item !== selected))
+
+      dashboardsItem.wasSelectedStorage = [...wasSelectedArray, selected]
+      updateDashboard(dashboardsItem, dispatch)
+
     } else {
-      setListItems(wasSelectedArray.filter(Boolean))
+      setListItems(wasSelectedArray)
+      dashboardsItem.items = wasSelectedArray
       setWasSelectedArray([])
       setWasSelected('Randomiser is reloading...Press button one more time.')
+
+      dashboardsItem.wasSelectedStorage = wasSelectedArray
+      updateDashboard(dashboardsItem, dispatch)
     }
   }
 
@@ -49,9 +66,9 @@ const RandomaizerItem: FC<Randomizer> = ({ title, items, id }) => {
       <h2 className={classes.title}>{title}</h2>
       <p className="text-2xl text-center">{wasSelected}</p>
       <div className={classes.iconWrapper}>
-        <span onClick={() => setOpen(true)}>
+        <span onClick={() => setOpenModal(true)}>
           <IconEdit />
-          <Modal open={open} setOpen={setOpen} item={{ title, items, id }} />
+          <Modal open={openModal} setOpen={setOpenModal} item={{ title, items, id }} />
         </span>
         <span onClick={deleteItem}>
           <IconDelete />
