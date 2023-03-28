@@ -5,20 +5,20 @@ import Modal from '@/components/Modal/Modal'
 
 import classes from './RandomaizerItem.module.scss'
 
-const RandomaizerItem: FC<Randomizer> = ({ title, items, id, wasSelectedStorage }) => {
+const RandomaizerItem: FC<Randomizer> = ({ title, items, id, wasSelectedStorage = [] }) => {
   const { dashboardsId, dashboards, dispatch } = useDashboards()
 
   const [wasSelected, setWasSelected] = useState<string>('item will appear here')
   const [wasSelectedArray, setWasSelectedArray] = useState<string[]>([])
-  const [listItems, setListItems] = useState<string[]>(items)
+  const [listItems, setListItems] = useState<string[]>([...items])
   const [openModal, setOpenModal] = useState<boolean>(false)
 
   useEffect(() => {
-    setListItems(items)
+    setListItems([...items])
   }, [dashboards])
 
   useEffect(() => {
-    if(wasSelectedStorage) setWasSelectedArray(wasSelectedStorage)
+    if (wasSelectedStorage) setWasSelectedArray(wasSelectedStorage)
   }, [])
 
   const IconDelete = Icons.delete
@@ -30,21 +30,24 @@ const RandomaizerItem: FC<Randomizer> = ({ title, items, id, wasSelectedStorage 
       return item.list?.find((item) => item.id === id)
     })[0]
 
-    if (itemsList.length > 0) {
-      const selected: string = itemsList.splice(Math.floor(Math.round(Math.random() * itemsList.length - 1)), 1)[0]
+    if (wasSelectedArray.length !== itemsList?.length) {
+      const itemsToSelect = itemsList.filter((item) => !wasSelectedArray.some((wI) => wI === item))
+      const selected: string = itemsToSelect.splice(
+        Math.floor(Math.round(Math.random() * itemsToSelect.length - 1)),
+        1,
+      )[0]
 
       setWasSelected(selected)
 
       setWasSelectedArray([...wasSelectedArray, selected])
 
-      setListItems(itemsList.filter((item: string) => item !== selected))
+      setListItems(itemsList.filter((item) => !wasSelectedArray.some((wI) => wI === item)))
 
       dashboardsItem.wasSelectedStorage = [...wasSelectedArray, selected]
+      console.log('dashboardsItem', dashboardsItem)
       updateDashboard(dashboardsItem, dispatch)
-
     } else {
       setListItems(wasSelectedArray)
-      dashboardsItem.items = wasSelectedArray
       setWasSelectedArray([])
       setWasSelected('Randomiser is reloading...Press button one more time.')
 

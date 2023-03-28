@@ -24,19 +24,17 @@ const Modal: FC<ModalProps> = ({ open, setOpen, item }) => {
   } = useForm()
   const { dispatch, dashboards, dashboardsId } = useDashboards()
 
-  const { title, id } = item
+  const { title, id, wasSelectedStorage = [] } = item
 
   const onSubmit = ({ randomaizerName, ...fields }: FieldValues) => {
     let items = []
-    console.log(fields)
     for (const key in fields) {
       if (Object.prototype.hasOwnProperty.call(fields, key)) {
         const element = fields[key]
         items.push(element)
       }
     }
-    console.log(items)
-    const newRandomaizer: Randomizer = { id, title: randomaizerName, items }
+    const newRandomaizer: Randomizer = { id, title: randomaizerName, items, wasSelectedStorage }
     // @ts-ignore
     const dashboardsItem: Dashboard = dashboards?.find((item) => item.id === dashboardsId)
     dashboardsItem.list = [newRandomaizer]
@@ -45,21 +43,27 @@ const Modal: FC<ModalProps> = ({ open, setOpen, item }) => {
   }
 
   const onChange = ({ target }: SyntheticEvent) => {
-    setInValid(dashboards?.some(({ title }) => title === (target as HTMLInputElement).value))
+    const { name, value } = target as HTMLInputElement
+    const itemIndex = Number(name.split('-')[1])
+    const newFields = [...fields]
+
+    newFields[itemIndex - 1] = value
+
+    setFields(newFields)
+    setInValid(!value)
   }
 
   const addField = () => {
-    console.log([...fields, ''])
     setFields([...fields, ''])
   }
 
-  const listFields = fields?.map((fieldValue, ind) => (
+  const listFields = [...fields, ...wasSelectedStorage].map((fieldValue, ind) => (
     <div className="flex gap-x-3 items-center mb-5" key={ind}>
       <p>{++ind}.</p>
       <input
         className={classes.field}
         placeholder="randomaizer name"
-        {...register(uuidv4(), { onChange, value: fieldValue })}
+        {...register(`field-${ind}`, { onChange, value: fieldValue })}
       />
     </div>
   ))
@@ -67,15 +71,9 @@ const Modal: FC<ModalProps> = ({ open, setOpen, item }) => {
   const IconPlus = Icons.plus
 
   return (
-    <div
-      className={cx(classes.modal, open ? classes.active : '')}
-    
-    >
-      <div
-        className={classes.modalWrapper}
-       
-      >
-        <form className={classes.addGroups} onClick={handleSubmit(onSubmit)}>
+    <div className={cx(classes.modal, open ? classes.active : '')}>
+      <div className={classes.modalWrapper}>
+        <form className={classes.addGroups} onSubmit={handleSubmit(onSubmit)}>
           <div className="flex gap-y-4 items-center mb-5 flex-col">
             <p>Title: </p>
             <input
