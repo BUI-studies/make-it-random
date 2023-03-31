@@ -20,8 +20,8 @@ const Model = (props) => {
 const VisualModel = () => {
   return (
     <div className={classes.anim}>
-      <Canvas dpr={[1, 2]} camera={{ fov: 80 ,zoom: 2}} style={{position: 'absolute'}}>
-        <color attach="background" args={['black']} />
+      <Canvas dpr={[1, 2]} shadows camera={{ fov: 80 ,zoom: 2}} style={{position: 'absolute'}}>
+        {/* <color attach="background" args={['black']} /> */}
         {/* <pointLight position={[10, 10, 10]} />
          */}
         {/* <ambientLight /> */}

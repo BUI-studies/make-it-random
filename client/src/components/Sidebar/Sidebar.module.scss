@@ -1,5 +1,6 @@
 .sidebar {
-  @apply h-screen bg-transparent;
+  @apply h-screen bg-transparent relative;
+  //  height: calc(100vh - 120px);
 }
 
 .button {

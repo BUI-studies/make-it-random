@@ -12,6 +12,7 @@ import {
   useDashboards,
 } from '@/context/DashboardContext'
 import Icons from '@/assets/Icons'
+import Times from '@/assets/Times/Times'
 
 const Sidebar: FC = () => {
   const { dispatch, dashboards }: DashboardContextType = useDashboards()
@@ -47,8 +48,8 @@ const Sidebar: FC = () => {
           </button>
         </li> */}
         {groupRenderNames}
-        
       </ul>
+      <Times />
     </div>
   )
 }
