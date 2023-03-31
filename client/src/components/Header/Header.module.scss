@@ -1,0 +1,14 @@
+.header {
+  @apply  p-3 flex items-center justify-center relative bg-white cursor-pointer;
+}
+
+.img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border: 2px solid #000;
+  max-width: 70px;
+}
+
+

@@ -1,0 +1,43 @@
+.sidebar {
+  @apply h-screen bg-transparent;
+}
+
+.button {
+  @apply text-center px-3 py-3 text-sm font-medium hover:transition-all w-full;
+ text-transform: uppercase;
+ letter-spacing: .4px;
+
+  &__add {
+    @apply bg-gray-600;
+  }
+}
+
+.groupItem {
+  @apply flex items-center px-2 font-medium hover:transition-all w-full;
+  font-family: 'Oswald', sans-serif;
+ 
+  transition: background-color 0.4s ease-in-out;
+ 
+  &:hover {
+    background-color: yellow;
+
+    & button {
+      color: #000;
+    }
+  }
+
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+}
+
+.delete {
+  & svg {
+    cursor: pointer;
+  }
+}
+
+// .logo {
+//   background-color: #fff;
+//   border-radius: 50%;
+//   width: 30px;
+// }
