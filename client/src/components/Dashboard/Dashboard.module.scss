@@ -72,7 +72,7 @@
     font-size: 15rem;
     font-weight: 700;
     line-height: 1;
-    color: yellow;
+    color: #1888d5;
     text-transform: uppercase;
     animation: animate 1.5s ease-in-out;
   }
@@ -87,7 +87,7 @@
     content: 'busters';
     position: absolute;
     // -webkit-text-stroke: 2px white;
-    -webkit-text-stroke: 2px #1888d5;
+    -webkit-text-stroke: 2px yellow;
     top: 0;
     right: 0;
     font-size: 15rem;
@@ -110,7 +110,7 @@
 
 @keyframes animateColor {
   100% {
-    -webkit-text-stroke: 2px #1888d5;
+    -webkit-text-stroke: 2px yellow;
   }
 }
 
